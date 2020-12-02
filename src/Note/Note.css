@@ -1,0 +1,38 @@
+.flex-container {
+    display: flex;
+    margin: 0 auto;
+    width: 60%;
+    margin-top: 20px;
+}
+
+.item {
+    flex: 1;
+    
+} 
+
+.item-bg {
+    flex: 2;
+} 
+
+.item:first-child {
+    margin-right: 20px;
+}
+
+.note_topic{
+    border: 2px solid black;
+    padding-bottom : 10px;
+    overflow: hidden;
+}
+
+.note_name_date{
+    float: left;
+    padding: 0 0 10px 10px;
+}
+
+#delete_note{
+    margin-top: 50px;
+}
+
+.note_content{
+    text-align: left;
+}

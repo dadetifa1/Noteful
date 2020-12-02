@@ -5,9 +5,8 @@ class Header extends React.Component{
     render(){
         return (
             <>
-                <h1>Noteful</h1>
                 <Link to={'/'}>
-                    Main page
+                    <h1>Noteful</h1>
                 </Link>
             </>
         );

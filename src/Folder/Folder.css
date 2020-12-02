@@ -1,0 +1,43 @@
+.flex-container {
+    display: flex;
+    margin: 0 auto;
+    width: 60%;
+    margin-top: 20px;
+}
+
+.item {
+    flex: 1;
+    
+} 
+
+.item-bg {
+    flex: 2;
+} 
+
+.item:first-child {
+    margin-right: 20px;
+}
+
+.folder_note_card{
+    border: 2px solid black;
+    padding : 0 0 10px 10px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.folder_note_title, .folder_new_note{
+    float: left;
+}
+
+.delete_note{
+    margin-top: 50px;
+}
+
+.highlight{
+    background-color:yellow;
+    padding:0.1em 0.2em;
+}
+
+ul{
+    list-style-type:none;
+}
