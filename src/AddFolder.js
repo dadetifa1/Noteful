@@ -1,5 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import NotefulContext from './NotefulContext'
+import PropTypes from 'prop-types';
+
 
 class AddFolder extends React.Component{
     constructor(props) {
@@ -35,10 +38,7 @@ class AddFolder extends React.Component{
             return res.json()
         })
         .then(data => {
-            // addNewFolder
-          
           this.context.addNewFolder(data)
-          
         })
         .catch(error => {
             this.setState({errorMessage: error.message});
@@ -55,6 +55,9 @@ class AddFolder extends React.Component{
         return(
             <div>
                 <section className="Adding-Folder-Main">
+                    <Link to="/">
+                        Return to main page
+                    </Link>
                 { this.state.errorMessage && <h3 className="error"> { this.state.errorMessage } </h3> }
                     <form className="AddingFolder" onSubmit={e => this.handleSubmit(e)}>
                         <h2>Add a new folder</h2>
@@ -82,5 +85,9 @@ class AddFolder extends React.Component{
         )
     }
 }
+
+AddFolder.propTypes = {
+    history: PropTypes.object.isRequired
+};
 
 export default AddFolder;

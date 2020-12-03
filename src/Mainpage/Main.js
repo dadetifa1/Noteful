@@ -2,6 +2,7 @@ import React from 'react'
 import NotefulContext from '../NotefulContext';
 import { Link } from 'react-router-dom'
 import './Main.css'
+import PropTypes from "prop-types"
 
 class Main extends React.Component{
     static contextType = NotefulContext;
@@ -39,7 +40,7 @@ class Main extends React.Component{
             return(
             <div className="folder_note_card" key={matchingNotes.id}>
                 <div className="folder_note_title" >
-                    <h3>{matchingNotes.name}</h3>
+                    <h3><Link to={`/note/${matchingNotes.id}`}>{matchingNotes.name}</Link></h3>
                     <span>{new Date(matchingNotes.modified).toLocaleString()}</span>
                 </div>
                 <button className="delete_note" id={matchingNotes.id} onClick={this.handleClickDelete}>Delete Note</button>
@@ -48,7 +49,7 @@ class Main extends React.Component{
 
         const folderList = this.context.folders.map(folder => {
             return (
-                <li key={folder.id}> {folder.name}</li>
+                <li key={folder.id}><Link to={`/folder/${folder.id}`}>{folder.name}</Link></li>
                 );
         });
 
@@ -73,5 +74,9 @@ class Main extends React.Component{
         );
     }
 }
+
+Main.propTypes = {
+    history: PropTypes.object.isRequired
+};
 
 export default Main;

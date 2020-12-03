@@ -1,6 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import NotefulContext from './NotefulContext'
 import ValidationError from './ValidationError'
+import PropTypes from 'prop-types';
 
 class AddNote extends React.Component{
     constructor(props) {
@@ -83,6 +85,9 @@ class AddNote extends React.Component{
         return(
             <div>
                 <section className="AddingNotemain">
+                    <Link to="/">
+                        Return to main page
+                    </Link>
                     { this.state.errorMessage && <h3 className="error"> { this.state.errorMessage } </h3> }
                     <form className="AddingNote" onSubmit={e => this.handleSubmit(e)}>
                         <h2>Add a new Note</h2>
@@ -128,5 +133,10 @@ class AddNote extends React.Component{
         )
     }
 }
+
+AddNote.propTypes = {
+    history: PropTypes.object.isRequired
+};
+
 
 export default AddNote;

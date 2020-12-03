@@ -60,6 +60,9 @@ class Folder extends React.Component{
                 { this.state.errorMessage && <h3 className="error"> { this.state.errorMessage } </h3> }
                 <section className="sidebar item">
                     <div className="Folder_list">
+                        <Link to="">
+                            Return to main page
+                        </Link>
                         <ul>
                             {foldersList}
                         </ul>
