@@ -9,6 +9,7 @@ import AddFolder from './AddFolder'
 import AddNote from './AddNote'
 import NotefulError from './NotefulError/NotefulError'
 import Header from './Header/Header'
+const { API_SERVER_TOKEN, API_SERVER_URL  } = require('./config')
 
 class App extends React.Component {
   state = {
@@ -19,8 +20,16 @@ class App extends React.Component {
 
   componentDidMount() {
     Promise.all([
-      fetch(`http://localhost:9090/notes`),
-      fetch(`http://localhost:9090/folders`)
+      fetch(`${API_SERVER_URL}/notes`, {
+        headers: new Headers({
+          'Authorization': `Bearer ${API_SERVER_TOKEN}`, 
+        }) 
+      }),
+      fetch(`${API_SERVER_URL}/folders`, {
+        headers: new Headers({
+          'Authorization': `Bearer ${API_SERVER_TOKEN}`, 
+        })
+      })
     ])
       .then(([notesRes, foldersRes]) => {
         if (!notesRes.ok)
@@ -43,7 +52,7 @@ class App extends React.Component {
 
   handleDeleteNote = noteId => {
     this.setState({
-      notes: this.state.notes.filter(note => note.id !== noteId)
+      notes: this.state.notes.filter(note => note.id !== Number(noteId))
     })
   }
 

@@ -3,6 +3,7 @@ import NotefulContext from '../NotefulContext';
 import { Link } from 'react-router-dom'
 import './Main.css'
 import PropTypes from "prop-types"
+const { API_SERVER_TOKEN, API_SERVER_URL  } = require('../config')
 
 class Main extends React.Component{
     static contextType = NotefulContext;
@@ -14,17 +15,17 @@ class Main extends React.Component{
         e.preventDefault()
         const noteID = e.target.getAttribute('id');
 
-        fetch(`http://localhost:9090/notes/${noteID}`, {
+        fetch(`${API_SERVER_URL}/notes/${noteID}`, {
           method: 'DELETE',
           headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${API_SERVER_TOKEN}`
           },
         })
           .then(res => {
             if (!res.ok) {
                 throw new Error(res.status)
               }
-              return res.json()
           })
           .then(() => {
             this.context.deleteNote(noteID)

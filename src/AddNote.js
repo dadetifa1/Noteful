@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import NotefulContext from './NotefulContext'
 import ValidationError from './ValidationError'
 import PropTypes from 'prop-types';
+const { API_SERVER_TOKEN, API_SERVER_URL  } = require('./config')
 
 class AddNote extends React.Component{
     constructor(props) {
@@ -37,7 +38,7 @@ class AddNote extends React.Component{
     }
 
     AddingNewNoteToAPI (){
-        fetch(`http://localhost:9090/notes`, {
+        fetch(`${API_SERVER_URL}/notes`, {
           method: 'POST',
           body: JSON.stringify({
                 "name": this.state.noteNameInput.value,
@@ -46,7 +47,8 @@ class AddNote extends React.Component{
                 "modified": new Date().toLocaleString()
           }),
           headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${API_SERVER_TOKEN}`
           },
         })
         .then(res => {

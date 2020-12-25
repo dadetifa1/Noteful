@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import NotefulContext from '../NotefulContext'
 import './Note.css';
 import PropTypes from 'prop-types';
+const { API_SERVER_TOKEN, API_SERVER_URL  } = require('../config')
 
 class Note extends React.Component{
     static contextType = NotefulContext;
@@ -13,30 +14,30 @@ class Note extends React.Component{
     handleClickDelete = e => {
         e.preventDefault()
         this.props.history.push('/')
-        fetch(`http://localhost:9090/notes/${this.props.id}`, {
+
+        fetch(`${API_SERVER_URL}/notes/${this.props.id}`, {
           method: 'DELETE',
           headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${API_SERVER_TOKEN}`
           },
         })
-          .then(res => {
+        .then(res => {
             if (!res.ok) {
                 throw new Error(res.status)
-              }
-              return res.json()
+            }
           })
           .then(() => {
             this.context.deleteNote(this.props.id)
-            
           })
           .catch(error => {
             this.setState({ errormessage:  error.message })
-          })
+        })
      }
 
     render(){
         const selectedNotes = this.context.notes
-        .filter(note => note.id === this.props.id)
+        .filter(note => note.id === Number(this.props.id))
         .map(matchingNotes => {
             return(
             <div className="noteitem_card" key={matchingNotes.id}>
@@ -55,7 +56,7 @@ class Note extends React.Component{
             </div>);
         });
 
-        let folderId = this.context.notes.find(note => note.id === this.props.id)
+        let folderId = this.context.notes.find(note => note.id === Number(this.props.id))
 
         const foldersList = this.context.folders
         .filter(folder => folder.id === folderId.folderId)

@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import NotefulContext from './NotefulContext'
 import PropTypes from 'prop-types';
+const { API_SERVER_TOKEN, API_SERVER_URL  } = require('./config')
 
 
 class AddFolder extends React.Component{
@@ -22,13 +23,14 @@ class AddFolder extends React.Component{
 
     AddingNewFolderToAPI (){
         this.props.history.push('/')
-        fetch(`http://localhost:9090/folders`, {
+        fetch(`${API_SERVER_URL}/folders`, {
           method: 'POST',
           body: JSON.stringify({
                 "name": this.state.folderNameInput.value
           }),
           headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${API_SERVER_TOKEN}`
           },
         })
         .then(res => {

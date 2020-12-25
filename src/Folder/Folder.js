@@ -3,6 +3,7 @@ import NotefulContext from '../NotefulContext'
 import './Folder.css'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
+const { API_SERVER_TOKEN, API_SERVER_URL  } = require('../config')
 
 class Folder extends React.Component{
     state = {
@@ -15,17 +16,17 @@ class Folder extends React.Component{
         e.preventDefault()
         const noteID = e.target.getAttribute('id');
 
-        fetch(`http://localhost:9090/notes/${noteID}`, {
+        fetch(`${API_SERVER_URL}/notes/${noteID}`, {
           method: 'DELETE',
           headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${API_SERVER_TOKEN}`
           },
         })
           .then(res => {
             if (!res.ok) {
                 throw new Error(res.status)
-              }
-              return res.json()
+            }
           })
           .then(() => {
             this.context.deleteNote(noteID)
@@ -37,7 +38,7 @@ class Folder extends React.Component{
      }
 
     render(){
-        const selectedNotes = this.context.notes.filter(note => note.folderId === this.props.id)
+        const selectedNotes = this.context.notes.filter(note => note.folderId === Number(this.props.id))
                                 .map(matchingNotes => {
                                     return(
                                     <div className="folder_note_card" key={matchingNotes.id}>
@@ -52,7 +53,7 @@ class Folder extends React.Component{
                                 });
         const foldersList = this.context.folders.map(folder => {
             return (
-            <li key={folder.id} className={folder.id === this.props.id ? "highlight": ""} >{folder.name}</li>
+            <li key={folder.id} className={folder.id === Number(this.props.id) ? "highlight": ""} >{folder.name}</li>
             );
         });
         return (
